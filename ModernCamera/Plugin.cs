@@ -2,6 +2,7 @@
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using ModernCamera.Hooks;
+using ModernCamera.Utils;
 using Silkworm.Utils;
 
 namespace ModernCamera;

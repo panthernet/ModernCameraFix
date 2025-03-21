@@ -1,3 +1,7 @@
+# FIXES against original 1.5.6 version
+ - Fixed excessive expression spam
+ - Fixed Log call hook
+
 # ModernCamera
 Makes the camera more like an action MMO camera. This includes better control over the third person camera and a first person mode. Action mode allows you to toggle camera rotation so you don't have to always hold down the mouse to rotate the camera.
 

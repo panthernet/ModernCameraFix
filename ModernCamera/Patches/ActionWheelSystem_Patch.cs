@@ -12,12 +12,13 @@ internal static class ActionWheelSystem_Patch
     [HarmonyPatch(typeof(ActionWheelSystem), nameof(ActionWheelSystem.OnUpdate))]
     private static void OnUpdate(ActionWheelSystem __instance)
     {
-        if (!WheelVisible && (__instance._CurrentActiveWheel.IsVisible() || __instance._EmotesWheel.IsVisible()))
+        if (!WheelVisible && ((__instance?._CurrentActiveWheel?.IsVisible() ?? false) ||
+                              (__instance?._EmotesWheel?.IsVisible() ?? false)))
         {
             ModernCameraState.IsMenuOpen = true;
             WheelVisible = true;
         }
-        else if (WheelVisible && !__instance._CurrentActiveWheel.IsVisible() && !__instance._EmotesWheel.IsVisible())
+        else if (WheelVisible && !(__instance?._CurrentActiveWheel?.IsVisible() ?? false) && !(__instance?._EmotesWheel?.IsVisible() ?? false))
         {
             ModernCameraState.IsMenuOpen = false;
             WheelVisible = false;
