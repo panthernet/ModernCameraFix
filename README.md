@@ -1,4 +1,4 @@
-# FIXES against original 1.5.6 version
+# FIXES against original 1.5.6 (2.0.0?) version
  - Fixed excessive expression spam
  - Fixed Log call hook
 
