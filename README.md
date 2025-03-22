@@ -1,4 +1,5 @@
 # FIXES against original 1.5.6 (2.0.0?) version
+## V2.0.1
  - Added localization support (language files are stored in BepInEx/Config/ModernCamera)
  - Fixed excessive exception spam
  - Fixed Log call hook
