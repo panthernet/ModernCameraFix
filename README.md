@@ -1,6 +1,8 @@
 # FIXES against original 1.5.6 (2.0.0?) version
- - Fixed excessive expression spam
+ - Added localization support (language files are stored in BepInEx/Config/ModernCamera)
+ - Fixed excessive exception spam
  - Fixed Log call hook
+ - Fixed options display in Settings menu
 
 # ModernCamera
 Makes the camera more like an action MMO camera. This includes better control over the third person camera and a first person mode. Action mode allows you to toggle camera rotation so you don't have to always hold down the mouse to rotate the camera.
