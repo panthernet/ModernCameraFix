@@ -1,7 +1,10 @@
 ﻿using ModernCamera.Enums;
+using ModernCamera.Utils;
+using ProjectM.UI;
 using Silkworm.API;
 using Silkworm.Core.KeyBinding;
 using Silkworm.Core.Options;
+using Stunlock.Localization;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -87,6 +90,14 @@ namespace ModernCamera
         {
             SetupOptions();
             SetupKeybinds();
+
+            //a bit hacky way to update the settings menu when it's opened
+            SettingsMenuHook.OnSettingsMenuLanguageChanged += (language) =>
+            {
+                LangUtils.LoadLanguage(Localization.CurrentLanguage ?? language);
+                SetupOptions();
+                SetupKeybinds();
+            };
         }
 
         internal static void AddEnabledListener(OnChange<bool> action) => EnabledOption.AddListener(action);
@@ -95,35 +106,36 @@ namespace ModernCamera
 
         private static void SetupOptions()
         {
-            var category = OptionsManager.AddCategory("Modern Camera");
-            EnabledOption = category.AddToggle("moderncamera.enabled", "Enabled", true);
-            FirstPersonEnabledOption = category.AddToggle("moderncamera.firstperson", "Enable First Person", true);
-            DefaultBuildModeOption = category.AddToggle("moderncamera.defaultbuildmode", "Use Default Build Mode Camera", true);
-            AlwaysShowCrosshairOption = category.AddToggle("moderncamera.alwaysshowcrosshair", "Always show Crosshair", false);
-            ActionModeCrosshairOption = category.AddToggle("moderncamera.actionmodecrosshair", "Show Crosshair in Action Mode", false);
-            FieldOfViewOption = category.AddSlider("moderncamera.fieldofview", "Field of View", 50, 90, 60);
+            OptionsManager.Clear();
+            var category = OptionsManager.AddCategory(LangUtils.Get("moderncamera.category"));
+            EnabledOption = category.AddToggle("moderncamera.enabled", LangUtils.Get("moderncamera.enabled"), true);
+            FirstPersonEnabledOption = category.AddToggle("moderncamera.firstperson", LangUtils.Get("moderncamera.firstperson"), true);
+            DefaultBuildModeOption = category.AddToggle("moderncamera.defaultbuildmode", LangUtils.Get("moderncamera.defaultbuildmode"), true);
+            AlwaysShowCrosshairOption = category.AddToggle("moderncamera.alwaysshowcrosshair", LangUtils.Get("moderncamera.alwaysshowcrosshair"), false);
+            ActionModeCrosshairOption = category.AddToggle("moderncamera.actionmodecrosshair", LangUtils.Get("moderncamera.actionmodecrosshair"), false);
+            FieldOfViewOption = category.AddSlider("moderncamera.fieldofview", LangUtils.Get("moderncamera.fieldofview"), 50, 90, 60);
 
-            category.AddDivider("Third Person Aiming");
-            CameraAimModeOption = category.AddDropdown("moderncamera.aimmode", "Aim Mode", (int)CameraAimMode.Default, Enum.GetNames(typeof(CameraAimMode)));
-            AimOffsetXOption = category.AddSlider("moderncamera.aimoffsetx", "Screen X% Offset ", -25, 25, 0);
-            AimOffsetYOption = category.AddSlider("moderncamera.aimoffsety", "Screen Y% Offset", -25, 25, 0);
+            category.AddDivider(LangUtils.Get("moderncamera.divider.thirdpersonaiming"));
+            CameraAimModeOption = category.AddDropdown("moderncamera.aimmode", LangUtils.Get("moderncamera.aimmode"), (int)CameraAimMode.Default, Enum.GetNames(typeof(CameraAimMode)));
+            AimOffsetXOption = category.AddSlider("moderncamera.aimoffsetx", LangUtils.Get("moderncamera.aimoffsetx"), -25, 25, 0);
+            AimOffsetYOption = category.AddSlider("moderncamera.aimoffsety", LangUtils.Get("moderncamera.aimoffsety"), -25, 25, 0);
 
-            category.AddDivider("Third Person Zoom");
-            MinZoomOption = category.AddSlider("moderncamera.minzoom", "Min Zoom", 1, 18, 2);
-            MaxZoomOption = category.AddSlider("moderncamera.maxzoom", "Max Zoom", 3, 20, 18);
-            LockCameraZoomOption = category.AddToggle("moderncamera.lockzoom", "Lock Camera Zoom", false);
-            LockCameraZoomDistanceOption = category.AddSlider("moderncamera.lockzoomdistance", "Locked Camera Zoom Distance", 6, 20, 15);
+            category.AddDivider(LangUtils.Get("moderncamera.divider.thirdpersonzoom"));
+            MinZoomOption = category.AddSlider("moderncamera.minzoom", LangUtils.Get("moderncamera.minzoom"), 1, 18, 2);
+            MaxZoomOption = category.AddSlider("moderncamera.maxzoom", LangUtils.Get("moderncamera.maxzoom"), 3, 20, 18);
+            LockCameraZoomOption = category.AddToggle("moderncamera.lockzoom", LangUtils.Get("moderncamera.lockzoom"), false);
+            LockCameraZoomDistanceOption = category.AddSlider("moderncamera.lockzoomdistance", LangUtils.Get("moderncamera.lockzoomdistance"), 6, 20, 15);
 
-            category.AddDivider("Third Person Pitch");
-            MinPitchOption = category.AddSlider("moderncamera.minpitch", "Min Pitch", 0, 90, 9);
-            MaxPitchOption = category.AddSlider("moderncamera.maxpitch", "Max Pitch", 0, 90, 90);
-            LockCameraPitchOption = category.AddToggle("moderncamera.lockpitch", "Lock Camera Pitch", false);
-            LockCameraPitchAngleOption = category.AddSlider("moderncamera.lockpitchangle", "Locked Camera Pitch Angle", 0, 90, 60);
+            category.AddDivider(LangUtils.Get("moderncamera.divider.thirdpersonpitch"));
+            MinPitchOption = category.AddSlider("moderncamera.minpitch", LangUtils.Get("moderncamera.minpitch"), 0, 90, 9);
+            MaxPitchOption = category.AddSlider("moderncamera.maxpitch", LangUtils.Get("moderncamera.maxpitch"), 0, 90, 90);
+            LockCameraPitchOption = category.AddToggle("moderncamera.lockpitch", LangUtils.Get("moderncamera.lockpitch"), false);
+            LockCameraPitchAngleOption = category.AddSlider("moderncamera.lockpitchangle", LangUtils.Get("moderncamera.lockpitchangle"), 0, 90, 60);
 
-            category.AddDivider("Over the Shoulder");
-            OverTheShoulderOption = category.AddToggle("moderncamera.overtheshoulder", "Use Over the Shoulder Offset", false);
-            OverTheShoulderXOption = category.AddSlider("moderncamera.overtheshoulderx", "X Offset", 0.5f, 4, 1);
-            OverTheShoulderYOption = category.AddSlider("moderncamera.overtheshouldery", "Y Offset", 1, 8, 1);
+            category.AddDivider(LangUtils.Get("moderncamera.divider.overtheshoulder"));
+            OverTheShoulderOption = category.AddToggle("moderncamera.overtheshoulder", LangUtils.Get("moderncamera.overtheshoulder"), false);
+            OverTheShoulderXOption = category.AddSlider("moderncamera.overtheshoulderx", LangUtils.Get("moderncamera.overtheshoulderx"), 0.5f, 4, 1);
+            OverTheShoulderYOption = category.AddSlider("moderncamera.overtheshouldery", LangUtils.Get("moderncamera.overtheshouldery"), 1, 8, 1);
 
             MinZoomOption.AddListener(value =>
             {
@@ -160,12 +172,13 @@ namespace ModernCamera
 
         private static void SetupKeybinds()
         {
-            var category = KeybindingsManager.AddCategory("Modern Camera");
+            KeybindingsManager.Clear();
+            var category = KeybindingsManager.AddCategory(LangUtils.Get("moderncamera.category"));
 
-            EnabledKeybind = category.AddKeyBinding("moderncamera.enabled", "Enabled");
+            EnabledKeybind = category.AddKeyBinding("moderncamera.enabled", LangUtils.Get("moderncamera.enabled"));
             EnabledKeybind.AddKeyDownListener(() => EnabledOption.SetValue(!Enabled));
 
-            ActionModeKeybind = category.AddKeyBinding("moderncamera.actionmode", "Action Mode");
+            ActionModeKeybind = category.AddKeyBinding("moderncamera.actionmode", LangUtils.Get("moderncamera.actionmode"));
             ActionModeKeybind.AddKeyDownListener(() =>
             {
                 if (Settings.Enabled && !ModernCameraState.IsFirstPerson)
@@ -175,7 +188,7 @@ namespace ModernCamera
                 }
             });
 
-            HideUIKeybind = category.AddKeyBinding("moderncamera.hideui", "Hide UI");
+            HideUIKeybind = category.AddKeyBinding("moderncamera.hideui", LangUtils.Get("moderncamera.hideui"));
         }
     }
 }

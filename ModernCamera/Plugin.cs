@@ -3,12 +3,11 @@ using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using ModernCamera.Hooks;
 using ModernCamera.Utils;
-using Silkworm.Utils;
 
 namespace ModernCamera;
 
 [BepInProcess("VRising.exe")]
-[BepInDependency("iZastic.Silkworm")]
+[BepInDependency("VRising.SilkwormReborn")]
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
 public class Plugin : BasePlugin
 {

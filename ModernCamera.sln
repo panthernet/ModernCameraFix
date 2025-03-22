@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernCamera", "ModernCamera\ModernCamera.csproj", "{7253F4CB-D6C9-4FE5-8D1B-039A45E3432F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silkworm", "..\Silkworm\Silkworm\Silkworm.csproj", "{5BD5B78F-7462-4549-8260-3F0267758C20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SilkwormReborn", "..\Silkworm\Silkworm\SilkwormReborn.csproj", "{5BD5B78F-7462-4549-8260-3F0267758C20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

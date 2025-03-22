@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using ProjectM.UI;
-using Silkworm.Utils;
 
 namespace ModernCamera.Patches
 {

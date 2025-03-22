@@ -12,10 +12,27 @@
     <PackageProjectUrl>https://github.com/v-rising/ModernCamera</PackageProjectUrl>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugType>Full</DebugType>
+  </PropertyGroup>
+
   <ItemGroup>
-	  <PackageReference Include="VRising.Unhollowed.Client" Version="1.0.2.794360001" />
+	  <PackageReference Include="System.Text.Json" Version="9.0.3" />
     <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.*" IncludeAssets="compile" />
-    <ProjectReference Include="..\..\Silkworm\Silkworm\Silkworm.csproj" />
+    <PackageReference Include="VRising.Unhollowed.Client" Version="1.0.5.802790001" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Silkworm\Silkworm\SilkwormReborn.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ModernCamera.English.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ModernCamera.Russian.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <Import Project="$(MSBuildProjectDirectory)\PluginInfo.props" />
