@@ -7,7 +7,7 @@ using ModernCamera.Utils;
 namespace ModernCamera;
 
 [BepInProcess("VRising.exe")]
-[BepInDependency("VRising.SilkwormReborn")]
+[BepInDependency("panthernet.SilkwormReborn")]
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
 public class Plugin : BasePlugin
 {
