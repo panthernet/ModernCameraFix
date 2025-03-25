@@ -1,6 +1,7 @@
 ﻿{
   "moderncamera.category": "Modern Camera",
   "moderncamera.enabled": "Enabled",
+  "moderncamera.actionmode.enabled": "Action Mode Enabled",
   "moderncamera.firstperson": "Enable First Person",
   "moderncamera.defaultbuildmode": "Use Default Build Mode Camera",
   "moderncamera.alwaysshowcrosshair": "Always show Crosshair",

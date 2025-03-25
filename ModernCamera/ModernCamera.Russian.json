@@ -1,6 +1,7 @@
 ﻿{
   "moderncamera.category": "Modern Camera",
   "moderncamera.enabled": "Включено",
+  "moderncamera.actionmode.enabled": "Action режим включено",
   "moderncamera.firstperson": "Включить вид от первого лица",
   "moderncamera.defaultbuildmode": "Использовать камеру по умолчанию в режиме строительства",
   "moderncamera.alwaysshowcrosshair": "Всегда показывать прицел",

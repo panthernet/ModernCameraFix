@@ -14,6 +14,12 @@ namespace ModernCamera
     internal static class Settings
     {
         internal static bool Enabled { get => EnabledOption.Value; set => EnabledOption.SetValue(value); }
+        internal static bool ActionModeEnabled
+        {
+            get => ActionModeEnabledOption.Value;
+            set => ActionModeEnabledOption.SetValue(value);
+        }
+
         internal static bool FirstPersonEnabled { get => FirstPersonEnabledOption.Value; set => FirstPersonEnabledOption.SetValue(value); }
         internal static bool DefaultBuildMode { get => DefaultBuildModeOption.Value; set => DefaultBuildModeOption.SetValue(value); }
         internal static bool AlwaysShowCrosshair { get => AlwaysShowCrosshairOption.Value; set => AlwaysShowCrosshairOption.SetValue(value); }
@@ -58,6 +64,7 @@ namespace ModernCamera
         private static float ZoomOffset = 2;
 
         private static ToggleOption EnabledOption;
+        private static ToggleOption ActionModeEnabledOption;
         private static SliderOption FieldOfViewOption;
         private static ToggleOption AlwaysShowCrosshairOption;
         private static ToggleOption ActionModeCrosshairOption;
@@ -109,6 +116,9 @@ namespace ModernCamera
             OptionsManager.Clear();
             var category = OptionsManager.AddCategory(LangUtils.Get("moderncamera.category"));
             EnabledOption = category.AddToggle("moderncamera.enabled", LangUtils.Get("moderncamera.enabled"), true);
+            ActionModeEnabledOption = category.AddToggle("moderncamera.actionmode.enabled", LangUtils.Get("moderncamera.actionmode.enabled"), false);
+            ActionModeEnabledOption.AddListener(SetActionMode);
+            
             FirstPersonEnabledOption = category.AddToggle("moderncamera.firstperson", LangUtils.Get("moderncamera.firstperson"), true);
             DefaultBuildModeOption = category.AddToggle("moderncamera.defaultbuildmode", LangUtils.Get("moderncamera.defaultbuildmode"), true);
             AlwaysShowCrosshairOption = category.AddToggle("moderncamera.alwaysshowcrosshair", LangUtils.Get("moderncamera.alwaysshowcrosshair"), false);
@@ -170,25 +180,27 @@ namespace ModernCamera
             });
         }
 
+
         private static void SetupKeybinds()
         {
             KeybindingsManager.Clear();
             var category = KeybindingsManager.AddCategory(LangUtils.Get("moderncamera.category"));
 
-            EnabledKeybind = category.AddKeyBinding("moderncamera.enabled", LangUtils.Get("moderncamera.enabled"));
+            EnabledKeybind = category.AddKeyBinding("moderncamera.enabled", LangUtils.Get("moderncamera.enabled"), "F8");
             EnabledKeybind.AddKeyDownListener(() => EnabledOption.SetValue(!Enabled));
 
-            ActionModeKeybind = category.AddKeyBinding("moderncamera.actionmode", LangUtils.Get("moderncamera.actionmode"));
-            ActionModeKeybind.AddKeyDownListener(() =>
-            {
-                if (Settings.Enabled && !ModernCameraState.IsFirstPerson)
-                {
-                    ModernCameraState.IsMouseLocked = !ModernCameraState.IsMouseLocked;
-                    ModernCameraState.IsActionMode = !ModernCameraState.IsActionMode;
-                }
-            });
+            ActionModeKeybind = category.AddKeyBinding("moderncamera.actionmode", LangUtils.Get("moderncamera.actionmode"), "F9");
+            ActionModeKeybind.AddKeyDownListener(() => SetActionMode(!ActionModeEnabledOption.Value));
 
             HideUIKeybind = category.AddKeyBinding("moderncamera.hideui", LangUtils.Get("moderncamera.hideui"));
+        }
+
+        private static void SetActionMode(bool value)
+        {
+            if (Settings.Enabled && !ModernCameraState.IsFirstPerson)
+            {
+                ModernCamera.ActionMode(value);
+            }
         }
     }
 }

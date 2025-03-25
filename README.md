@@ -89,6 +89,10 @@ Source code for the SilkwormReborn library [https://github.com/panthernet/Silkwo
 
 
 ### Changelog
+`2.0.2`
+ - Added Action camera as toggle option (keybinds broken completely)
+Action camera is buggy too, cursor isn't switching off I guess.
+
 `2.0.1`
  - Added localization support (language files are stored in BepInEx/Config/ModernCamera)
  - Fixed excessive exception spam
