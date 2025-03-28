@@ -402,3 +402,5 @@ FodyWeavers.xsd
 Prefabs.*
 TODO.md
 /.editorconfig
+/interop
+/ProjectM.HUD.dll
