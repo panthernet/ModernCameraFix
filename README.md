@@ -84,11 +84,25 @@ If you like the mod and want to give back, consider buying me a coffee [https://
 - Kunogi: `@牧瀬紅莉栖#1570` on Discord
 
 
-### SilkwormReborn
-Source code for the SilkwormReborn library [https://github.com/panthernet/SilkwormReborn](https://github.com/panthernet/SilkwormReborn).
-
-
 ### Changelog
+`2.0.6`
+ - Fixed several bugs introduced in prev release.Keybinds should work as intended
+ - Fixed options not being loaded unless you go to options UI
+ - Fixed options UI items duping in some cases
+
+`2.0.5`
+ - Unexpected version bump
+ 
+`2.0.3`
+ - Fixed action mode
+ - Fixed options save/load
+ - Fixed key bindings, only hardcoded for now
+   You can check binding keys in the menu.
+ - Fixed auto switch language in options
+ - Removed SilkwormReborn.dll, Bloodstone.dll is my new best friend!
+   You can safely delete SilkwormReborn.dll from previous installation
+   Bloodstone.dll v0.2.2 provided with the release.
+
 `2.0.2`
  - Added Action camera as toggle option (keybinds broken completely)
 Action camera is buggy too, cursor isn't switching off I guess.

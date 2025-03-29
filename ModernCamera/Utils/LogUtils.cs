@@ -3,7 +3,7 @@ using BepInEx.Logging;
 
 namespace ModernCamera.Utils
 {
-    public static class LogUtils
+    public class LogUtils
     {
         private static ManualLogSource Log;
 
@@ -20,6 +20,11 @@ namespace ModernCamera.Utils
         public static void LogInfo(string text)
         {
             Log?.LogInfo(text);
+        }
+
+        public static void LogWarning(string s)
+        {
+            Log?.LogWarning(s);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using ModernCamera.Enums;
+using ModernCamera.Patches;
+using ModernCamera.Utils;
 using ProjectM;
 using UnityEngine;
 
@@ -30,10 +32,21 @@ internal abstract class CameraBehaviour
 
     internal virtual unsafe void HandleInput(ref InputState inputState)
     {
-        if (inputState.InputsPressed.IsCreated && ModernCameraState.IsMouseLocked && !ModernCameraState.IsMenuOpen && !inputState.IsInputPressed(ButtonInputAction.RotateCamera))
+        if (!inputState.InputsPressed.IsCreated) return;
+
+        if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape))
         {
-            var a = ButtonInputAction.RotateCamera;
-            inputState.InputsPressed.m_ListData->Add(ref a);
+            if (EscapeMenuView_Patch.IsEscapeMenuOpen)
+            {
+                LogUtils.LogInfo("EscapeMenuView is open, closing it");
+                ModernCameraState.IsMenuOpen = false;
+                EscapeMenuView_Patch.IsEscapeMenuOpen = false;
+            }
+        }
+
+        if (ModernCameraState.IsMouseLocked && !ModernCameraState.IsMenuOpen && !inputState.IsInputPressed(ButtonInputAction.RotateCamera))
+        {
+            inputState.InputsPressed.m_ListData->AddNoResize(ButtonInputAction.RotateCamera);
         }
 
         // Manually manage camera zoom

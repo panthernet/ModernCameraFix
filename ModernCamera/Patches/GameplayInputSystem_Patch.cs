@@ -16,8 +16,7 @@ internal static class GameplayInputSystem_Patch
         if (!Settings.Enabled) return;
         if (ModernCameraState.IsMouseLocked && !ModernCameraState.IsMenuOpen && !inputState.IsInputPressed(ButtonInputAction.RotateCamera))
         {
-            var a = ButtonInputAction.RotateCamera;
-            inputState.InputsPressed.m_ListData->Add(ref a);
+            inputState.InputsPressed.m_ListData->AddNoResize(ButtonInputAction.RotateCamera);
         }
     }
 }

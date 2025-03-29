@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using ModernCamera.API;
 using ProjectM.UI;
 
 namespace ModernCamera.Patches;
@@ -12,5 +13,8 @@ internal static class OptionsMenu_Base_Patch
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(OptionsMenu_Base), nameof(OptionsMenu_Base.OnDestroy))]
-    private static void OnDestroy() => ModernCameraState.IsMenuOpen = false;
+    private static void OnDestroy()
+    {
+        ModernCameraState.IsMenuOpen = false;
+    }
 }

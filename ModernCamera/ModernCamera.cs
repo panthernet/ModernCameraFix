@@ -4,7 +4,6 @@ using ModernCamera.Utils;
 using ProjectM;
 using ProjectM.Sequencer;
 using ProjectM.UI;
-using Silkworm.Utils;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -41,7 +40,7 @@ public class ModernCamera : MonoBehaviour
 
     private static void UpdateEnabled(bool enabled)
     {
-        if (ZoomModifierSystem != null)
+        if (ZoomModifierSystem != null && ZoomModifierSystem.World != null)
             ZoomModifierSystem.Enabled = !enabled;
 
         if (Crosshair != null)
@@ -65,19 +64,31 @@ public class ModernCamera : MonoBehaviour
         DisableUISettings.SetHideHUD(ModernCameraState.IsUIHidden, WorldUtils.ClientWorld);
     }
 
+    private volatile bool _listenersActivated;
+
     private void Awake()
     {
-        ModernCameraState.RegisterCameraBehaviour(new FirstPersonCameraBehaviour());
+        /*ModernCameraState.RegisterCameraBehaviour(new FirstPersonCameraBehaviour());
         ModernCameraState.RegisterCameraBehaviour(new ThirdPersonCameraBehaviour());
 
         Settings.AddEnabledListener(UpdateEnabled);
-        Settings.AddFieldOfViewListener(UpdateFieldOfView);
+        Settings.AddFieldOfViewListener(UpdateFieldOfView);*/
        // Settings.AddHideUIListener(ToggleUI);
     }
 
     private void Update()
     {
         if (!GameFocused || !Settings.Enabled) return;
+
+        if (!_listenersActivated)
+        {
+            ModernCameraState.RegisterCameraBehaviour(new FirstPersonCameraBehaviour());
+            ModernCameraState.RegisterCameraBehaviour(new ThirdPersonCameraBehaviour());
+
+            Settings.AddEnabledListener(UpdateEnabled);
+            Settings.AddFieldOfViewListener(UpdateFieldOfView);
+            _listenersActivated = true;
+        }
 
         if (CrosshairPrefab == null)
             BuildCrosshair();
