@@ -1,6 +1,7 @@
 ﻿using ModernCamera.Utils;
 using ProjectM;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ModernCamera.API;
 
@@ -12,6 +13,17 @@ public static class KeybindingsManager
 {
     internal static Dictionary<string, KeybindingCategory> Categories = new();
     internal static string ActionsFilename = "actions.json";
+    internal static string KeyBindsFilename = "keybinds.json";
+
+
+    internal class KeyCodeStorage
+    {
+        public KeyCode EnableKeyCode { get; set; } = KeyCode.Home;
+        public KeyCode ActionModeKeyCode { get; set; } = KeyCode.PageUp;
+        public KeyCode HideUIKeyCode { get; set; } = KeyCode.Slash;
+    }
+
+    internal static KeyCodeStorage KeyCodeStorageData { get; set; } = new();
 
     public static KeybindingCategory AddCategory(string name, string desc)
     {
@@ -111,7 +123,6 @@ public static class KeybindingsManager
     {
         if (!FileUtils.Exists(ActionsFilename))
         {
-            Save();
             return;
         }
 
@@ -126,5 +137,17 @@ public static class KeybindingsManager
     public static void Clear()
     {
        // Categories.Clear();
+    }
+
+    public static void LoadKeyBinds()
+    {
+        if (!FileUtils.Exists(KeyBindsFilename))
+        {
+            FileUtils.WriteJson(KeyBindsFilename, KeyCodeStorageData, true);
+
+            return;
+        }
+
+        KeyCodeStorageData = FileUtils.ReadJson<KeyCodeStorage>(KeyBindsFilename, true);
     }
 }

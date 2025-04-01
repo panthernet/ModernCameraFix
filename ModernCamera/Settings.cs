@@ -178,11 +178,13 @@ namespace ModernCamera
 
         private static void SetupKeybinds(bool alreadySet)
         {
-            var category = KeybindingsManager.AddCategory("moderncamera.category", LangUtils.Get("moderncamera.category"));
-            EnabledKeybind = category.AddKeyBinding("moderncamera.enabled", "ModernCamera", LangUtils.Get("moderncamera.enabled"), KeyCode.Comma);
-            ActionModeKeybind = category.AddKeyBinding("moderncamera.actionmode", "ModernCamera", LangUtils.Get("moderncamera.actionmode"), KeyCode.Period);
+            KeybindingsManager.LoadKeyBinds();
 
-            HideUIKeybind = category.AddKeyBinding("moderncamera.hideui", "ModernCamera", LangUtils.Get("moderncamera.hideui"), KeyCode.Slash);
+            var category = KeybindingsManager.AddCategory("moderncamera.category", LangUtils.Get("moderncamera.category"));
+            EnabledKeybind = category.AddKeyBinding("moderncamera.enabled", "ModernCamera", LangUtils.Get("moderncamera.enabled"), KeybindingsManager.KeyCodeStorageData.EnableKeyCode);
+            ActionModeKeybind = category.AddKeyBinding("moderncamera.actionmode", "ModernCamera", LangUtils.Get("moderncamera.actionmode"), KeybindingsManager.KeyCodeStorageData.ActionModeKeyCode);
+
+            HideUIKeybind = category.AddKeyBinding("moderncamera.hideui", "ModernCamera", LangUtils.Get("moderncamera.hideui"), KeybindingsManager.KeyCodeStorageData.HideUIKeyCode);
             if (!alreadySet)
             {
                 ActionModeKeybind.AddKeyPressedListener(() =>
@@ -213,6 +215,8 @@ namespace ModernCamera
                 {
 
                 });
+
+                KeybindingsManager.FullSave();
             }
         }
 

@@ -85,6 +85,10 @@ If you like the mod and want to give back, consider buying me a coffee [https://
 
 
 ### Changelog
+`2.0.7`
+ - `keybinds.json` will now generate on first launch. You can change keybinds there, requires game restart.
+All available keys: https://docs.unity3d.com/6000.0/Documentation/ScriptReference/KeyCode.html
+
 `2.0.6`
  - Fixed several bugs introduced in prev release.Keybinds should work as intended
  - Fixed options not being loaded unless you go to options UI
